@@ -7,21 +7,21 @@
 //of a valid sentence as per the dictionary. Otherwise, return an empty list.
 
 //O(n^n)
-function canStringBeBroken({string, dictionary, answer}) {
+let canStringBeBroken = ({string, dictionary, answer}) => {
     let stringLength = string.length;
     if (stringLength === 0) return true;
 
     let prefix = "";
+
     for (let i = 0; i < stringLength; i++) {
         prefix += string.charAt(i);
         if (dictionary.includes(prefix)) {
             answer += `${prefix}  `;
             let suffix = string.slice(i + 1);
-            //If true, return true, if false return false.
             return !!canStringBeBroken({string: suffix, dictionary, answer});
         }
     }
-}
+};
 
 let dictionaryArray = ['hi', 'i', 'what', 'up', 'name', 'amy', 'dog', 'am', 'have'];
 let inputString = 'whatup';
