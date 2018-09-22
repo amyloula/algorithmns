@@ -7,7 +7,7 @@
 //of a valid sentence as per the dictionary. Otherwise, return an empty list.
 
 //O(n^n)
-let canStringBeBroken = ({string, dictionary, answer}) => {
+let canStringBeBrokenFor = ({string, dictionary, answer}) => {
     let stringLength = string.length;
     if (stringLength === 0) return true;
 
@@ -18,11 +18,30 @@ let canStringBeBroken = ({string, dictionary, answer}) => {
         if (dictionary.includes(prefix)) {
             answer += `${prefix}  `;
             let suffix = string.slice(i + 1);
-            return !!canStringBeBroken({string: suffix, dictionary, answer});
+            return !!canStringBeBrokenFor({string: suffix, dictionary, answer});
         }
     }
 };
 
+let canStringBeBrokenWhile = ({string, dictionary, answer}) => {
+    let stringLength = string.length;
+    if (stringLength === 0) return true;
+
+    let i = 0;
+    let prefix = '';
+
+    while (i < stringLength) {
+        prefix += string.charAt(i);
+
+        if (dictionary.includes(prefix)) {
+            answer += `${prefix}  `;
+            let suffix = string.slice(i + 1);
+            return (canStringBeBrokenWhile({string: suffix, dictionary, answer})) ? true : i++;
+        } else i++;
+    }
+    return false;
+};
 let dictionaryArray = ['hi', 'i', 'what', 'up', 'name', 'amy', 'dog', 'am', 'have'];
 let inputString = 'whatup';
-canStringBeBroken({string: inputString, dictionary: dictionaryArray, answer: ''});
+canStringBeBrokenFor({string: inputString, dictionary: dictionaryArray, answer: ''});
+canStringBeBrokenWhile({string: inputString, dictionary: dictionaryArray, answer: ''});
