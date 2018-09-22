@@ -1,3 +1,5 @@
+let Benchmark = require('benchmark');
+let suite = new Benchmark.Suite();
 // Given a string ss and a dictionary of words dictdict, add spaces in ss to construct every possible sentence such that
 // each word is valid as per the given dictionary. Return all such possible sentences.
 
@@ -45,3 +47,25 @@ let dictionaryArray = ['hi', 'i', 'what', 'up', 'name', 'amy', 'dog', 'am', 'hav
 let inputString = 'whatup';
 canStringBeBrokenFor({string: inputString, dictionary: dictionaryArray, answer: ''});
 canStringBeBrokenWhile({string: inputString, dictionary: dictionaryArray, answer: ''});
+
+// Benchmark for testing and comparision of the two implementations
+
+suite.add('for #forLoop', function () {
+    canStringBeBrokenFor({string: inputString, dictionary: dictionaryArray, answer: ''});
+});
+suite.add('while #whileLoop', function () {
+    canStringBeBrokenWhile({string: inputString, dictionary: dictionaryArray, answer: ''});
+});
+suite
+    .on('cycle', function (event) {
+        console.log(String(event.target));
+    })
+    .on('complete', function () {
+        console.log('Fastest is ' + this.filter('fastest').map('name'));
+    })
+    // run async
+    .run({'async': true});
+
+//for #forLoop x 1,650,145 ops/sec ±14.86% (67 runs sampled)
+// while #whileLoop x 2,396,400 ops/sec ±6.11% (73 runs sampled)
+// Fastest is while #whileLoop
