@@ -63,10 +63,12 @@ suite
     })
     .on('complete', function () {
         console.log(`Fastest is ${this.filter('fastest').map('name')}`);
+        console.log(`Completed without error : ${this.filter('successful').map('name')}`);
     })
     .run({'async': true});
 
-// while #whileLoop x 1,486,304 ops/sec ±3.84% (73 runs sampled)
-// for #forLoop x 1,450,064 ops/sec ±2.59% (77 runs sampled)
-// map #map x 1,516,521 ops/sec ±3.40% (74 runs sampled)
-// Fastest is map #map,while #whileLoop
+// while #whileLoop x 1,350,201 ops/sec ±6.26% (71 runs sampled)
+// for #forLoop x 1,380,598 ops/sec ±2.62% (71 runs sampled)
+// map #map x 1,347,681 ops/sec ±21.12% (69 runs sampled)
+// Fastest is for #forLoop,while #whileLoop
+//     Completed without error : while #whileLoop,for #forLoop,map #map
